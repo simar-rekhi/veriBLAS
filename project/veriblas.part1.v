@@ -1,118 +1,116 @@
-//===========================================
-//
-// BrokenEasy v2026
-// Dr. Eric Becker
-// Spring 2026
-//
-// First Program Example
-// Demonstrate common mistakes in Verilog
-//
-//===========================================
+/******************************************
 
-//-------------------------------------------
-//
-// Breadboard module
-// Class module that represents a board for circuit assembly
-// Input and output comes from the testbech. 
-// Basic logic equations using operators
-//
-// & ==> AND
-// | ==> OR
-// ~ ==> NOT
-//
-//-------------------------------------------
-module Breadboard	(w,x,y,z,r1,r2,r3);  //Module Header/Module Begin
-input w,x,y,z;                           //Specify inputs
-output r1, r2, r3;                       //Specify outputs
-wire w,x,y,z;							 //Input is a source, must be of type wire
-reg r1,r2,r3;                            //Output is a memory area, must be of type reg
+ Gate-Based Code in Verilog 
+ by Veriblas
+ 
+ 2/18/2026
 
-always @ ( w,x,y,z,r1,r2,r3) begin       //with no time constraints (Always)
-										 //Create a block of code  (begin)
-                                         //when all of these variables are used ( w,x,y,z,r1,r2,r3) 
+ Spring 2026
 
-	//x+y'z                              //The Formula for R1
-	r1= (x)|((~y)&z);                    //Bitwise operation of the formula r1
+ ALU Project Part 1
 
-	//Demorgan's						 //Apply Demorgan's Laws to R1
-	r2= ~(~(~y&z)&(~x));                 //Bitwise operation of the formula r2
+ The purpose of this program is to demonstrate an understanding of
+ gate-based logic and general Verilog capabilities. It does so by
+ using a truth table's normalized equations in order to display
+ said truth table.
 
-	//wxyz+w'x'y'z'                      //The Formula R3
-    r3= (w&x&y&z)|(~w&~x&~y&~z);
+ It contains modules for the testbench and breadboard. Effectively,
+ the testbench handles the passing and receiving of the inputs and
+ outputs of the breadboard. The breadboard holds all equations, which
+ then are returned as results (r0-r9). 
 
-    end                                  // Finish the Always block
+ Contributors:
+    N. Mateo Garcia (IDE: VSCode; no external tools used)
+    Aryan KC
 
-endmodule                                //Module End
+ Reviewers:
+    Simar Rekhi
+    Yashita Singh Rathore
 
-//-------------------------------------------
-//
-// Testbench module
-// Class module that represents the main 
-// Must have the "Initial" keyword to begin thread
-// 
-// Generate four inputs for a truth table (a,b,c,d)
-// Link the breadboard module (not a call) to run in parallel
-// 
-// Use a for loop to generate each line of the truth table.
-// 
-// Goals:
-// Have example of the wire/reg parameter passing
-// Have examples of errors
-//
-//-------------------------------------------
+********************************************/
+
+// -Breadboard module-
+// Contains all minterms and equations
+// Results of equations are sent back to the testbench
+module Breadboard(w,x,y,z,
+                    r0,r1,r2,r3,r4,
+                    r5,r6,r7,r8,r9);
+
+// -I/O Declaration-
+input w,x,y,z;
+output r0,r1,r2,r3,r4,r5,r6,r7,r8,r9;
+
+// -Wire & Reg Assignments-
+wire w,x,y,z;
+reg r0,r1,r2,r3,r4,r5,r6,r7,r8,r9;
+
+// -Always container for equations-
+// No time constraints if you have the following variables
+always @ (w,x,y,z,
+            r0,r1,r2,r3,r4,
+            r5,r6,r7,r8,r9)
+    begin
+
+    // -Equation construction & results-
+    // Using the minterms, full equations are constructed
+    // and put into results (r0-r9).
+    //
+    // Dev Note: I was originally going to predefine the
+    // minterms, but there is a lot of them needed so it'll
+    // be directly defined instead. Maybe at a later date,
+    // when more minterms are required, I'll go through and
+    // redefine the results with them.
+
+    r0 = (~x&~y&~z)|(w&~y&~z)|(~w&x&z)|(w&~x&y);
+    r1 = (~w&~y)|(x&~z)|(w&~x)|(w&y&z);
+    r2 = (~w&~x&~z)|(~w&x&z)|(x&y)|(w&y&z);
+    r3 = (~w&y&~z)|(w&~y&z)|(~w&x&~y&~z);
+    r4 = (~w&x&~y&~z)|(~w&x&y&z)|(w&x&y&~z)|(w&~x&~y&z);
+    r5 = (~w&~x&~z)|(~w&~y)|(x&~y&z)|(w&x&y&~z);
+    r6 = (~w&~x&~z)|(x&~y&z)|(w&~y&~z)|(w&~x&y&z);
+    r7 = (~x&~y&z)|(x&y&~z)|(w&~y&~z)|(w&y&z);
+    r8 = (~x&~y&z)|(~x&y&~z)|(~w&x&~z)|(w&~y&~z)|(w&x&y&z);
+    r9 = (~w&~y&z)|(w&~x&y&z)|(x&y);
+
+
+
+    end
+
+endmodule
+
+// Skeleton for testbench module
 module testbench();
 
-	//Registers act like local variables
-	reg [3:0] i; //A loop control for 16 rows of a truth table.
-	reg  a;//Value of 2^3
-	reg  b;//Value of 2^2
-	reg  c;//Value of 2^1
-	reg  d;//Value of 2^0
-  
-	//A wire can hold the return of a function
-	wire  f1,f2,f3;
-  
-	//Modules can be either functions, or model chips. 
-	//They are instantiated like an object of a class, 
-	//with a constructor with parameters.  They are not invoked,
-	//but operate like a thread.
-	Breadboard bb8(a,b,c,d,f1,f2,f3);
- 	 
-	//Initial means "start," like a Main() function.
-	//Begin denotes the start of a block of code.	
-	initial begin
-   	
-		//$display acts like a java System.println command.
-		$display ("|##|A|B|C|D|F1|F2|F3|");
-		$display ("|==+=+=+=+=+==+==+==|");
-  
-		//A for loop, with register i being the loop control variable.
-		for (i = 0; i <16; i = i + 1) 
-		begin										//Open the code block of the for loop
-			a=(i/8);//High bit
-			b=(i/4);
-			c=(i/2);
-			d=(i/1);//Low bit	
-		 
-			//Oh, Dr. Becker, do you remember what belongs here? 
+    reg [4:0] i; // Loop var
+    // Registers for input vars
+    reg a;
+    reg b;
+    reg c;
+    reg d;
 
-			//Display one row of the truth table
-			$display ("|%2d|%1d|%1d|%1d|%1d| %1d| %1d| %1d|",i,a,b,c,d,f1,f2,f3);
-			
-			//Every fourth row of the table, put in a marker for easier reading.
-			if(i%4==3) 
-			begin 									//Open block for If statement
-				$write ("|--+-+-+-+-+--+--+--|\n");	//Write acts a bit like a java System.print
-			end 									//Close block for if statement.
+    // Wires for all 10 equations
+    wire f0,f1,f2,f3,f4,f5,f6,f7,f8,f9;
 
-		end											//End of the for loop code block
- 
-		//A time delay of 10 time units. Hashtag Delay
-		#10; 
-		
-		//The finish command, like System.exit(0) in Java.
-		$finish;
-		
-	end  //End the code block of the main thread (initial)
-  
-endmodule //Close the testbench module
+    Breadboard ALU(a,b,c,d,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9);
+
+    initial begin
+
+    end
+endmodule
+
+/*
+
+Equations from truthtable:
+
+f0: x'y'z'+wy'z'+w'xz+wx'y
+f1: w'y'+xz'+wx'z+wyz
+f2: w'x'z'+w'xz+xy+wyz
+f3: w'yz'+wy'z+w'xy'z'
+f4: w'xy'z'+w'xyz+wxyz'+wx'y'z
+f5: w'x'z'+w'y'+xy'z+wxyz'
+f6: w'x'z'+xy'z+wy'z'+wx'yz
+f7: x'y'z+xyz'+wy'z'+wyz
+f8: x'y'z+x'yz'+w'xz'+wy'z'+wxyz
+f9: w'y'z+wx'yz+xy
+
+*/
