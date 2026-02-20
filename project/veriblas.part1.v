@@ -57,25 +57,44 @@ always @ (w,x,y,z,
     // -Equation construction & results-
     // Using the minterms, full equations are constructed
     // and put into results (r0-r9).
-    //
-    // Dev Note: I was originally going to predefine the
-    // minterms, but there is a lot of them needed so it'll
-    // be directly defined instead. Maybe at a later date,
-    // when more minterms are required, I'll go through and
-    // redefine the results with them.
 
-    r0 = (~x&~y&~z)|(w&~y&~z)|(~w&x&z)|(w&~x&y);
-    r1 = (~w&~y)|(x&~z)|(w&~x)|(w&y&z);
-    r2 = (~w&~x&~z)|(~w&x&z)|(x&y)|(w&y&z);
-    r3 = (~w&y&~z)|(w&~y&z)|(~w&x&~y&~z);
-    r4 = (~w&x&~y&~z)|(~w&x&y&z)|(w&x&y&~z)|(w&~x&~y&z);
-    r5 = (~w&~x&~z)|(~w&~y)|(x&~y&z)|(w&x&y&~z);
-    r6 = (~w&~x&~z)|(x&~y&z)|(w&~y&~z)|(w&~x&y&z);
-    r7 = (~x&~y&z)|(x&y&~z)|(w&~y&~z)|(w&y&z);
-    r8 = (~x&~y&z)|(~x&y&~z)|(~w&x&~z)|(w&~y&~z)|(w&x&y&z);
-    r9 = (~w&~y&z)|(w&~x&y&z)|(x&y);
+    // r0 (f0) Minterm Form: Rows 0, 5, 7, 8, 10, 11, 12
+    r0 = (~w&~x&~y&~z)|(~w&x&~y&z)|(~w&x&y&z)|(w&~x&~y&~z)|(w&~x&y&~z)|
+         (w&~x&y&z)|(w&x&~y&~z);
 
+    // r1 (f1) Minterm Form: Rows 0, 1, 4, 5, 6, 9, 11, 12, 14, 15
+    r1 = (~w&~x&~y&~z)|(~w&~x&~y&z)|(~w&x&~y&~z)|(~w&x&~y&z)|(~w&x&y&~z)
+         |(w&~x&~y&z)|(w&~x&y&z)|(w&x&~y&~z)|(w&x&y&~z)|(w&x&y&z);
 
+    // r2 (f2) Minterm Form: Rows 0, 2, 5, 6, 7, 11, 14, 15
+    r2 = (~w&~x&~y&~z)|(~w&~x&y&~z)|(~w&x&~y&z)|(~w&x&y&~z)|(~w&x&y&z)
+         |(w&~x&y&z)|(w&x&y&~z)|(w&x&y&z);
+
+    // r3 (f3) Minterm Form: Rows 2, 4, 9, 10, 13
+    r3 = (~w&~x&y&~z)|(~w&x&~y&~z)|(w&~x&~y&z)|(w&~x&y&~z)|(w&x&~y&z);
+
+    // r4 (f4) Minterm Form: Rows 4, 7, 9, 14
+    r4 = (~w&x&~y&~z)|(~w&x&y&z)|(w&~x&~y&z)|(w&x&y&~z);
+
+    // r5 (f5) Minterm Form: Rows 0, 1, 2, 4, 5, 13, 14
+    r5 = (~w&~x&~y&~z)|(~w&~x&~y&z)|(~w&~x&y&~z)|(~w&x&~y&~z)|(~w&x&~y&z)|
+         (w&x&~y&z)|(w&x&y&~z);
+
+    // r6 (f6) Minterm Form: Rows 0, 2, 5, 8, 11, 12, 13
+    r6 = (~w&~x&~y&~z)|(~w&~x&y&~z)|(~w&x&~y&z)|(w&~x&~y&~z)|(w&~x&y&z)|
+         (w&x&~y&~z)|(w&x&~y&z);
+
+    // r7 (f7) Minterm Form: Rows 1, 6, 8, 9, 11, 12, 14, 15
+    r7 = (~w&~x&~y&z)|(~w&x&y&~z)|(w&~x&~y&~z)|(w&~x&~y&z)|(w&~x&y&z)|
+         (w&x&~y&~z)|(w&x&y&~z)|(w&x&y&z);
+
+    // r8 (f8) Minterm Form: Rows 1, 2, 4, 6, 8, 9, 10, 12, 15
+    r8 = (~w&~x&~y&z)|(~w&~x&y&~z)|(~w&x&~y&~z)|(~w&x&y&~z)|(w&~x&~y&~z)|
+         (w&~x&~y&z)|(w&~x&y&~z)|(w&x&~y&~z)|(w&x&y&z);
+
+    // r9 (f9) Minterm Form: Rows 0, 4, 6, 7, 11, 14, 15
+    r9 = (~w&~x&~y&~z)|(~w&x&~y&~z)|(~w&x&y&~z)|(~w&x&y&z)|(w&~x&y&z)|
+         (w&x&y&~z)|(w&x&y&z);
 
     end
 
