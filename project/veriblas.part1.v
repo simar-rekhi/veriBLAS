@@ -81,7 +81,7 @@ always @ (w,x,y,z,
 
 endmodule
 
-// Skeleton for testbench module
+// Testbench Module with the Stimulus requirement
 module testbench();
 
     reg [4:0] i; // Loop var
