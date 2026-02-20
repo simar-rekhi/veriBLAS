@@ -23,7 +23,7 @@
  then are returned as results (r0-r9). 
 
  Contributors:
-    N. Mateo Garcia (IDE: VSCode; no external tools used)
+    N. Mateo Garcia (IDE: VSCode; Compiler: iVerilog via VSCode extension / Windows Terminal; no external tools used)
     Aryan KC (Editor: VSCode; Compiler: iVerilog via MacOS Terminal)
 
  Reviewers:
@@ -73,7 +73,7 @@ always @ (w,x,y,z,
     r6 = (~w&~x&~z)|(x&~y&z)|(w&~y&~z)|(w&~x&y&z);
     r7 = (~x&~y&z)|(x&y&~z)|(w&~y&~z)|(w&y&z);
     r8 = (~x&~y&z)|(~x&y&~z)|(~w&x&~z)|(w&~y&~z)|(w&x&y&z);
-    r9 = (~w&~y&z)|(w&~x&y&z)|(x&y);
+     r9 = (~w&~y&~z)|(w&~x&y&z)|(x&y);
 
 
 
