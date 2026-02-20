@@ -1,11 +1,14 @@
 /******************************************
 
  Gate-Based Code in Verilog 
- by Veriblas
- 
+ by veriBLAS
+
+ Language: iVerilog (Icarus Verilog)
+ Editor: Visual Studio Code (VSCode)
+ Compiler: iVerilog (via MacOS Terminal)
  2/18/2026
 
- Spring 2026
+ Spring 2026 CS4341.007
 
  ALU Project Part 1
 
@@ -21,7 +24,7 @@
 
  Contributors:
     N. Mateo Garcia (IDE: VSCode; no external tools used)
-    Aryan KC
+    Aryan KC (Editor: VSCode; Compiler: iVerilog via MacOS Terminal)
 
  Reviewers:
     Simar Rekhi
@@ -94,8 +97,24 @@ module testbench();
     Breadboard ALU(a,b,c,d,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9);
 
     initial begin
+        // Print the header for the truth table
+        $display("W X Y Z | r0 r1 r2 r3 r4 r5 r6 r7 r8 r9");
+        $display("-----------------------------------------");
 
+        // The Stimulus: Loop 16 times for all 4-bit combinations
+        for (i = 0; i < 16; i = i + 1) begin
+            
+            // Assign bits of i to inputs and wait for logic to settle
+            {a, b, c, d} = i[3:0]; 
+            #1; 
+            
+            // Display the result in the terminal
+            $display("%b %b %b %b |  %b  %b  %b  %b  %b  %b  %b  %b  %b  %b", 
+                     a, b, c, d, f0, f1, f2, f3, f4, f5, f6, f7, f8, f9);
+        end
+        $finish; // Ends the simulation
     end
+
 endmodule
 
 /*
