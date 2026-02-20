@@ -56,7 +56,8 @@ always @ (w,x,y,z,
 
     // -Equation construction & results-
     // Using the minterms, full equations are constructed
-    // and put into results (r0-r9).
+    // and put into results (r0-r9).Equations used are listed
+    // at the EoF.
     //
     // Dev Note: I was originally going to predefine the
     // minterms, but there is a lot of them needed so it'll
@@ -65,15 +66,15 @@ always @ (w,x,y,z,
     // redefine the results with them.
 
     r0 = (~x&~y&~z)|(w&~y&~z)|(~w&x&z)|(w&~x&y);
-    r1 = (~w&~y)|(x&~z)|(w&~x)|(w&y&z);
+    r1 = (~w&~y)|(x&~z)|(w&~x&z)|(w&y&z);
     r2 = (~w&~x&~z)|(~w&x&z)|(x&y)|(w&y&z);
-    r3 = (~w&y&~z)|(w&~y&z)|(~w&x&~y&~z);
+    r3 = (~x&y&~z)|(w&~y&z)|(~w&x&~y&~z);
     r4 = (~w&x&~y&~z)|(~w&x&y&z)|(w&x&y&~z)|(w&~x&~y&z);
     r5 = (~w&~x&~z)|(~w&~y)|(x&~y&z)|(w&x&y&~z);
     r6 = (~w&~x&~z)|(x&~y&z)|(w&~y&~z)|(w&~x&y&z);
     r7 = (~x&~y&z)|(x&y&~z)|(w&~y&~z)|(w&y&z);
     r8 = (~x&~y&z)|(~x&y&~z)|(~w&x&~z)|(w&~y&~z)|(w&x&y&z);
-     r9 = (~w&~y&~z)|(w&~x&y&z)|(x&y);
+    r9 = (~w&~y&~z)|(w&~x&y&z)|(x&y);
 
 
 
