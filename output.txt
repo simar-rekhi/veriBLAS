@@ -1,0 +1,36 @@
+========================================
+  CS 4341 ALU Phase 2 - AND Gate Test  
+  Opcode 1010 = AND                    
+========================================
+
+-- Reset released --
+
+Test 1: 0xFFFFFFFF AND 0x0F0F0F0F => expect 0x0F0F0F0F
+  Loading opcode: 1010 | A = 0xffffffff | B = 0x0f0f0f0f
+  Result:         RESULT = 0x0f0f0f0f | Zero = 0 | Neg = 0 | Error = 0
+
+Test 2: 0xAAAAAAAA AND 0x55555555 => expect 0x00000000 (zero flag)
+  Loading opcode: 1010 | A = 0xaaaaaaaa | B = 0x55555555
+  Result:         RESULT = 0x00000000 | Zero = 1 | Neg = 0 | Error = 0
+
+Test 3: 0x12345678 AND 0xFFFFFFFF => expect 0x12345678
+  Loading opcode: 1010 | A = 0x12345678 | B = 0xffffffff
+  Result:         RESULT = 0x12345678 | Zero = 0 | Neg = 0 | Error = 0
+
+Test 4: 0xDEADBEEF AND 0xDEADBEEF => expect 0xDEADBEEF (negative flag)
+  Loading opcode: 1010 | A = 0xdeadbeef | B = 0xdeadbeef
+  Result:         RESULT = 0xdeadbeef | Zero = 0 | Neg = 1 | Error = 0
+
+Test 5: 0x00000000 AND 0xFFFFFFFF => expect 0x00000000 (zero flag)
+  Loading opcode: 1010 | A = 0x00000000 | B = 0xffffffff
+  Result:         RESULT = 0x00000000 | Zero = 1 | Neg = 0 | Error = 0
+
+Test 6: Wrong opcode 0000 (ADD) sent to AND breadboard => error flag
+  Loading opcode: 0000 | A = 0xffffffff | B = 0xffffffff
+  Result:         RESULT = 0x00000000 | Zero = 1 | Neg = 0 | Error = 1
+  [ERROR] Opcode 0000 is not AND (1010). Result is undefined.
+
+========================================
+  Test sequence complete.              
+========================================
+testbench.v:107: $finish called at 66000 (1ps)
