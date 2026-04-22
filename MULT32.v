@@ -4,12 +4,7 @@
 // CS 4341 Spring 2026 - ALU Project Phase 2
 // Modeled after: https://github.com/Littled58/verilog-multipliers/blob/master/braun_mul.v
 
-
-// Dev note: this should be changed to compensate for 32-bit, currently is 4-bit
-
-`include "ADD32.v"
-
-module braun_mul(a, b, product);
+module mult(a, b, product);
     input [31:0] a;
     input [31:0] b;
     output [63:0] product;
@@ -52,11 +47,43 @@ module braun_mul(a, b, product);
     assign pp31 = a & {32{b[31]}};
 
     // Shift each partial product and sum them
-    assign sum1 = {4'b0000, pp0};           // no shift
-    assign sum2 = {3'b000, pp1, 1'b0};      // shift by 1
-    assign sum3 = {2'b00, pp2, 2'b00};      // shift by 2
-    assign sum4 = {1'b0, pp3, 3'b000};      // shift by 3
-    // Needs a bunch more (Sum5-Sum32)
+    assign sum1 = {32'b0, pp0, 1'b0};
+    assign sum2 = {31'b0, pp1, 2'b0};
+    assign sum3 = {30'b0, pp2, 3'b0};
+    assign sum4 = {29'b0, pp3, 4'b0};
+    assign sum5 = {28'b0, pp4, 5'b0};
+    assign sum6 = {27'b0, pp5, 6'b0};
+    assign sum7 = {26'b0, pp6, 7'b0};
+    assign sum8 = {25'b0, pp7, 8'b0};
+    assign sum9 = {24'b0, pp8, 9'b0};
+    assign sum10 = {23'b0, pp9, 10'b0};
+    assign sum11 = {22'b0, pp10, 11'b0};          
+    assign sum12 = {21'b0, pp11, 12'b0};    
+    assign sum13 = {20'b0, pp12, 13'b00};    
+    assign sum14 = {19'b0, pp13, 14'b0};   
+    assign sum15 = {18'b0, pp14, 15'b0};
+    assign sum16 = {17'b0, pp15, 16'b0};
+    assign sum17 = {16'b0, pp16, 17'b0};
+    assign sum18 = {15'b0, pp17, 18'b0};
+    assign sum19 = {14'b0, pp18, 19'b0};
+    assign sum20 = {13'b0, pp19, 20'b0};
+    assign sum21 = {12'b0, pp20, 21'b0};
+    assign sum22 = {11'b0, pp21, 22'b0};
+    assign sum23 = {10'b0, pp22, 23'b0};
+    assign sum24 = {9'b0, pp23, 24'b0};
+    assign sum25 = {8'b0, pp24, 25'b0};
+    assign sum26 = {7'b0, pp25,  26'b0};
+    assign sum27 = {6'b0, pp26, 27'b0};
+    assign sum28 = {5'b0, pp27, 28'b0};
+    assign sum29 = {4'b0, pp28, 29'b0};        
+    assign sum30 = {3'b0, pp29, 30'b0};  
+    assign sum31 = {2'b0, pp30, 31'b00};  
+    assign sum32 = {1'b0, pp31, 32'b0};
 
-    assign product = sum1 + sum2 + sum3 + sum4 /* Plus all the other ones */;
+    assign product = sum1 + sum2 + sum3 + sum4 
+        + sum5 + sum6 + sum7 + sum8 + sum9 + sum10
+        + sum11 + sum12 + sum13 + sum14 + sum15 + sum16
+        + sum17 + sum18 + sum19 + sum20 + sum21 + sum22
+        + sum23 + sum24 + sum25 + sum26 + sum27 + sum28
+        + sum29 + sum30 + sum31 + sum32
 endmodule
