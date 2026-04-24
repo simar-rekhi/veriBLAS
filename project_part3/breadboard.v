@@ -106,7 +106,7 @@ module breadboard (
     // =========================================================
 
     // --- Add: 32-bit Adder (structural, ripple carry) ---
-    adder32 u_add (
+    add32 u_add (
         .A    (OperandA),
         .B    (OperandB),
         .Cin  (1'b0),
