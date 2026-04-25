@@ -26,7 +26,6 @@
 
 // --- Include all component modules ---
 `include "Add32.v"
-`include "Adder32.v"
 `include "Sub32.v"
 `include "Mult32.v"
 `include "Div32.v"
@@ -258,36 +257,26 @@ module breadboard (
     // Outputs
     // =========================================================
 
-    // OpResult comes from the register output
+    // OpResult comes from the register output (the Accumulator wire)
     assign OpResult = Accumulator;
 
     // --- Status Flags ---
     assign flag_zero     = (Accumulator == 32'b0);
     assign flag_negative = Accumulator[31];
+    
+    // Carry: logic for Add and Sub
     assign flag_carry    = (OpCode == 4'b0001) ? add_cout :
                            (OpCode == 4'b0011) ? sub_bout : 1'b0;
+
+    // Overflow: logic for signed Add and Sub
     assign flag_overflow = (OpCode == 4'b0001) ?
                            (OperandA[31] == OperandB[31]) && (Accumulator[31] != OperandA[31]) :
                            (OpCode == 4'b0011) ?
                            (OperandA[31] != OperandB[31]) && (Accumulator[31] != OperandA[31]) :
                            1'b0;
+
+    // Error: specifically for Division or Modulo by zero
     assign flag_error    = (OpCode == 4'b0110) ? div_error :
                            (OpCode == 4'b1000) ? mod_error : 1'b0;
-
-endmodule    reg [31:0] acc;
-    always @(posedge CLK) begin
-        if (RST)
-            acc <= 32'b0;
-        else
-            acc <= acc_in;
-    end
-
-    // --- Outputs ---
-    assign RESULT        = acc;
-    assign flag_zero     = (acc == 32'b0);
-    assign flag_negative = acc[31];
-
-    // Error: opcode sent was not AND (1010)
-    assign flag_error    = (OPCODE != 4'b1010);
 
 endmodule
