@@ -21,7 +21,7 @@ module neg32 (
     );
 
     // Step 2: add 1 by setting Cin = 1 and B = 0
-    adder32 u_add (
+    add32 u_add (
         .A   (inverted),
         .B   (32'b0),
         .Cin (1'b1),
