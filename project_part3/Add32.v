@@ -1,4 +1,4 @@
-// ADDER32.v
+// Add32.v
 // 32-bit Full Adder module
 // Structural: utilizes gate level logic to generate output
 // CS 4341 Spring 2026 - ALU Project Phase 2
@@ -21,7 +21,7 @@ or(cout,w2,w3,w4);
 
 endmodule
 
-module adder32 (
+module add32 (
     input  [31:0] A,
     input  [31:0] B,
     input         Cin,
